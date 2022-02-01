@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authenticate = require("../middleware/authenticate");
 
 // const Contact = require("../models/Contact");
 
@@ -36,7 +37,7 @@ router.get("/", contactController.getAllContactController);
 
 // Post
 
-router.post("/", contactController.postNewContactController);
+router.post("/", authenticate, contactController.postNewContactController);
 
 // router.post("/", (req, res, next) => {
 //   //   const name = req.body.name;
@@ -83,12 +84,12 @@ router.post("/", contactController.postNewContactController);
 
 router.get("./:id", contactController.getSingleContact);
 
-router.put("/:id", (req, res, next) => {
+router.put("/:id", authenticate, (req, res, next) => {
   res.json({
     message: "I am Put Route",
   });
 });
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", authenticate, (req, res, next) => {
   res.json({
     message: "I am delete Route",
   });

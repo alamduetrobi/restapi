@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const User = require("../models/UserModel");
 
 // Register Controller
@@ -55,8 +56,12 @@ const loginConroller = (req, res, next) => {
           });
         }
         if (result) {
+          let token = jwt.sign({ email: user.email, _id: user._id }, "SECRET", {
+            expiresIn: "2h",
+          });
           res.json({
             message: "Login Successfull",
+            token,
           });
         } else {
           res.json({
